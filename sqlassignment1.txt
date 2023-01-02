@@ -1,0 +1,75 @@
+create table Customers(
+id int Primary key,
+FirstName varchar(40) not null,
+LastName varchar(40) not null,
+City varchar(40),
+Country varchar(40),
+Phone varchar(40)
+);
+insert into Customers values(101,'Bithi','Talukder','Kolkata','India',8790654321);
+insert into Customers values(102,'Sneha','Roy','Sydney','Australia',890765432);
+insert into Customers values(103,'Aditi','Sharma','Mumbai','India', 898766543);
+insert into Customers values(104,'Ahana','Mondal','Sydney','Australia',8234567891);
+insert into Customers values(105,'Aura','Dubey','Berlin','Germany',9213456780);
+
+insert into Customers values(106,'Abira','Sikder','Berlin','Germany','030-0074321');
+
+create table Orders(
+id int Primary key,
+OrderDate datetime not null,
+OrderNumer varchar(10),
+TotalAmount decimal(12,2),
+CustomerId int foreign key references Customers(id)
+);
+insert into Orders values(1,'12/09/2022','01',879.00,101);
+insert into Orders values(2,'1/10/2022','02',600.00,101);
+insert into Orders values(3,'10/10/2022','03',512.00,103);
+insert into Orders values(4,'02/11/2022','04',400.00,102);
+
+
+create table Products(
+id int Primary key,
+ProductName varchar(50),
+UnitPrice decimal(12,2),
+Package varchar(30),
+IsDiscontinued bit
+);
+insert into Products values(1001,'AC',10000,'WaveLady',1);
+insert into Products values(1002,'Handwash',100,'Exortic Liquids',1);
+insert into Products values(1003,'Chocolate',15,'Amul',1);
+
+create table OrdersItem(
+UnitPrice decimal(12,2),
+Quantity int,
+OrderId int foreign key references Orders(id),
+ProductId int foreign key references Products(id)
+
+
+);
+
+Insert into OrdersItem values(100,1000,1,1001);
+Insert into OrdersItem values(101,2000,2,1002);
+Insert into OrdersItem values(15,15,2,1003);
+
+1)Select *from Customers;
+
+2)Select *from Customers where Country like 'A%' or Country like  'I%';
+
+3)Select *from Customers where FirstName like '__i%';
+
+4)select concat(FirstName,' ',LastName) AS FullName from Customers;
+
+5)Select *from Customers where FirstName like '_U%';
+
+6)Select *from OrdersItem where UnitPrice>10.00 and UnitPrice<20.00;
+
+7)Select *from Customers inner join Orders on Customers.id=Orders.CustomerId where Customers.Country!='London';
+
+8)Select id from Customers where FirstName like '%RA%';
+
+
+
+
+
+
+
