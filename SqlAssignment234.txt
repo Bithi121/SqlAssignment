@@ -1,0 +1,87 @@
+9)SELECT top 1 CustomerId,COUNT(*) from Orders group by CustomerId order by COUNT(*) desc;
+
+10)Select ProductName,UnitPrice from Products where UnitPrice =(select max(UnitPrice) from Products);
+11)Select ProductName,UnitPrice from Products where UnitPrice =(select min(UnitPrice) from Products);
+
+Alter table Products add UnitInStock int;
+Select *from Products;
+Update Products set UnitInStock=10 where id=1001;
+Update Products set UnitInStock=20 where id=1002;
+Update Products set UnitInStock=30 where id=1003;
+
+Alter table Products add UnitOnOrder int;
+Update Products set UnitOnOrder=5 where id=1001;
+Update Products set UnitOnOrder=30 where id=1002;
+Update Products set UnitOnOrder=20 where id=1003;
+
+12)Select id from Products where UnitInStock<UnitOnOrder;
+13)select CustomerId,OrderNumer,OrderDate  from Orders;
+14)select *from Products where IsDiscontinued=0;
+15)select avg(quantity) as AverageQuantity from OrdersItem inner join Products on OrdersItem.ProductId=Products.id;
+
+insert into Products values(1004,'Chai',90,'Tej',1,40,50);
+insert into OrdersItem values(90,100,1,1004);
+
+16)select *from OrdersItem right join Products on OrdersItem.ProductId=Products.id where Products.ProductName='Chai';
+
+
+Alter table Products add Category varchar(30);
+
+Update Products set Category='Appliances' where id=1001;
+Update Products set Category='Household things' where id=1002;
+Update Products set Category='food' where id=1003;
+Update Products set Category='food' where id=1004;
+
+insert into Products values(1005,'Oyesters',90,'Oyester',1,40,50,'Seafood');
+
+Alter table OrdersItem add discount int;
+Alter table OrdersItem drop column discount;
+Alter table Products add discount int;
+
+Update Products set discount=0.05 where id=1001;
+Update Products set discount=0.10 where id=1002;
+Update Products set discount=0.15 where id=1003;
+Update Products set discount=0.06 where id=1004;
+
+17)Select *from Products where Category='Seafood';
+18)Select OrdersItem.OrderId,((OrdersItem.UnitPrice*OrdersItem.Quantity)-Products.discount) as PriceAfterDiscount,Products.ProductName,Products.Category from OrdersItem inner join Products on OrdersItem.ProductId=Products.id;
+
+create table Employee(
+id int Primary key,
+FirstName varchar(40) not null,
+LastName varchar(40) not null,
+ManagerName varchar(40),
+
+);
+
+create table Department(
+id int Primary key,
+DeptName varchar(40),
+Ratings int,
+EmployeeId int foreign key references Employee(id)
+);
+
+Alter table Employee add CompanyName varchar(40);
+Alter table Employee add JoiningDate date;
+Alter table Employee add Constraint DeptId foreign key (id) references Department(id);
+select *from Employee;
+Alter table Employee drop constraint DeptId;
+
+Insert into Employee values(100,'Bithi','Talukder','Sudha Rao','Capgemini','2022-12-08');
+Insert into Employee values(101,'Steven ',' King ','Neena Kochar','Accenture','2022-11-05');
+Insert into Employee values(103,'Lex','De Haan','Alexander ','Capgemini','2022-06-05');
+Insert into Employee values(104,'Bruce',' Ernst ','Alexander ','Accenture','2021-04-05');
+
+Insert into Department values(10,'Cloud',4,100);
+Insert into Department values(11,'SAP',5,101);
+Insert into Department values(12,'Sales',4,102);
+Insert into Department values(13,'Android developer',5,103);
+Select *from Department;
+
+
+19)select concat(FirstName,' ',LastName) AS FullName from Employee;
+20)select DeptName,Ratings from Department;
+21)select *from Employee;
+22)select CompanyName from Employee;
+
+23)Select id,FirstName,LastName from Employee where JoiningDate=(Select max(JoiningDate) from Employee);
